@@ -33,7 +33,7 @@ After modifying their code to compute F2 scores for each model, I found that the
 - Random Forest: 0.2475
 - Neural Network: 0.3204
 
-Observe that our XGBoost model achieves meaningful relative performance gains of (0.34628858170800986/0.3204) - 1 = **~8%** over their best baseline model and (0.34628858170800986/0.2925) - 1 = **~18%** over their XGBoost model. Given that these baselines already use strong, well-established models which account for the heavy class imbalance (~1% fraud rate), and are therefore representative of realistic industry prototypes, this comparison reveals that our modeling choices offer meaningful, nontrivial performance improvements on this task.
+Observe that our XGBoost model achieves meaningful relative performance gains of (0.34628858170800986/0.3204) - 1 = ***~8%*** over their best baseline model and (0.34628858170800986/0.2925) - 1 = ***~18%*** over their XGBoost model. Given that these baselines already use strong, well-established models which account for the heavy class imbalance (~1% fraud rate), and are therefore representative of realistic industry prototypes, this comparison reveals that our modeling choices offer meaningful, nontrivial performance improvements on this task.
 
 ## Interpretable feature insights (from SVMs.ipynb):
 From our linear-kernel SVM, we filtered for the standardized features with the strongest coefficient signals (absolute value >= 0.1). Here are the key takeaways:
