@@ -1,6 +1,6 @@
 # Bank-Account-Fraud-Detection
 Here are some notebooks that I've created for the Bank Account Fraud Dataset Suite (NeurIPS 2022), which can be found here: https://www.kaggle.com/datasets/sgpjesus/bank-account-fraud-dataset-neurips-2022. There are multiple dataset "variants" in the suite. We focus on the base variant: Base.csv.
-## Legend:
+### Legend:
 - XGBoost.ipynb: Analyzing the dataset using XGBoost modelling.
 - SVMs.ipynb: Analyzing the dataset using linear-kernel SVMs and RBF-kernel SVM ensembles.
 
