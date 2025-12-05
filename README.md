@@ -3,8 +3,8 @@ Here are some notebooks that I've created for the Bank Account Fraud Dataset Sui
 ### Legend:
 - XGBoost.ipynb: Analyzing the dataset with XGBoost modelling.
 - SVMs.ipynb: Analyzing the dataset with linear-kernel SVMs and RBF-kernel SVM ensembles.
-### Usage Instructions:
-- Download Base.csv from https://www.kaggle.com/datasets/sgpjesus/bank-account-fraud-dataset-neurips-2022 and place it in the appropriate file path
+### Usage guide:
+- Download Base.csv from https://www.kaggle.com/datasets/sgpjesus/bank-account-fraud-dataset-neurips-2022 and place it in the appropriate file path.
 - Run the cells in the notebooks.
 
 ## High-level overview of Base.csv:
