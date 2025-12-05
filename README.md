@@ -9,7 +9,7 @@ Here are some notebooks that I've created for the Bank Account Fraud Dataset Sui
 
 ## High-level overview of Base.csv:
 - Target: Fraud label (1 if fraud, 0 if legit)
-- Each row represents information about a single bank account application
+- Each row represents information about a single bank account application.
 - Fraud incidence rate: ~1%
 - Description (from the website): "Base dataset of the BAF suite. Synthetic account opening fraud dataset with 1M instances based on a real-world dataset. It has a "month" column to allow for temporal validation, and three protected attributes (age group, employment status, and % income) to allow for fair ML evaluation."
 
