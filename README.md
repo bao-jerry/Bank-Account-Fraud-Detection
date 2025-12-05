@@ -25,7 +25,7 @@ Final model Precision: 0.15220557636287974
 Final model Accuracy: 0.9533488446961382
 ```
 #### Comparison to public baselines:
-We compare our XGBoost model to the baseline models provided in the most popular publicly available notebook for this dataset: https://www.kaggle.com/code/lennart4711/baselinemodels-roc. In their code, they used industry-standard models with balanced class weights to modify their objective functions to account for heavy class imbalance (~1% fraud rate into account), with zero hyperparameter searching. Note that their models are directly comparable to ours since they used an identical dataset (**Base.csv**) and an identical train/test split (first 6 months' data/last 2 months' data).
+We compare our XGBoost model to strong baseline models provided in the most popular publicly available notebook for this dataset: https://www.kaggle.com/code/lennart4711/baselinemodels-roc. In their code, they used industry-standard models with balanced class weights to modify their objective functions to account for heavy class imbalance (~1% fraud rate into account), with zero hyperparameter searching. Note that their models are directly comparable to ours since they used an identical dataset (**Base.csv**) and an identical train/test split (first 6 months' data/last 2 months' data).
 
 After modifying their code to compute F2 scores for each model, I found that they achieved:
 - Logistic Regression: 0.3102
