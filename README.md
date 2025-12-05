@@ -4,11 +4,11 @@ Here are some notebooks that I've created for the Bank Account Fraud Dataset Sui
 - XGBoost.ipynb: Analyzing the dataset using XGBoost modelling.
 - SVMs.ipynb: Analyzing the dataset using linear-kernel SVMs and RBF-kernel SVM ensembles.
 
-## High-level overview of dataset:
+## High-level overview of Base.csv:
 - Target: Fraud label (1 if fraud, 0 if legit)
 - Each row represents information about a single bank account application
 - Fraud incidence rate: ~1%
-- Base.csv description (from the website): "Base dataset of the BAF suite. Synthetic account opening fraud dataset with 1M instances based on a real-world dataset. It has a "month" column to allow for temporal validation, and three protected attributes (age group, employment status, and % income) to allow for fair ML evaluation."
+- Description (from the website): "Base dataset of the BAF suite. Synthetic account opening fraud dataset with 1M instances based on a real-world dataset. It has a "month" column to allow for temporal validation, and three protected attributes (age group, employment status, and % income) to allow for fair ML evaluation."
 
 ## Performance objective:
 The fraud incidence rate in this dataset is ~1%. For rare-event detection, accuracy becomes a far less meaningful metric than precision and recall. For bank account fraud in particular, missing a fraud instance is far more financially costly than falsely flagging a non-fraud instance. Therefore, we weigh recall significantly more than precision. Given this, we chose the F2 score as the optimization goal for our models, reflecting real-world business objectives.
