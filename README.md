@@ -6,7 +6,7 @@ Here are some notebooks that I've created for the Bank Account Fraud Dataset Sui
 ### Usage guide:
 1. Download **Base.csv** from https://www.kaggle.com/datasets/sgpjesus/bank-account-fraud-dataset-neurips-2022 and place it in the same directory as the notebooks.
 2. Run the cells in the notebooks.
-#### Python version tested: 3.12.12
+#### Tested with Python version 3.12.12
 
 ## High-level overview of **Base.csv**:
 - Target: Fraud label (1 if fraud, 0 if legit)
