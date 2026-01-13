@@ -1,51 +1,68 @@
 # Bank-Account-Fraud-Detection
 Here are some notebooks that I've created for the Bank Account Fraud Dataset Suite (NeurIPS 2022), which can be found here: https://www.kaggle.com/datasets/sgpjesus/bank-account-fraud-dataset-neurips-2022. There are multiple dataset "variants" in the suite. We focus on the base variant: **Base.csv**. All code was tested with Python version 3.12.12.
+### High-level overview of **Base.csv**:
+- **Target:** Fraud label (1 if fraud, 0 if legit)
+- **Features:** Each row represents information about a single bank account application.
+- **Fraud incidence rate:** ~1%
+- **Description (from the website):** "Base dataset of the BAF suite. Synthetic account opening fraud dataset with 1M instances based on a real-world dataset. It has a "month" column to allow for temporal validation, and three protected attributes (age group, employment status, and % income) to allow for fair ML evaluation."
 ### Legend:
-- XGBoost.ipynb: Analyzing the dataset with XGBoost modelling.
-- SVMs.ipynb: Analyzing the dataset with linear-kernel SVMs and RBF-kernel SVM ensembles.
+- **Exploratory_Data_Analysis.ipynb:** Feature correlation analysis, linear SVM feature coefficient analysis, feature heat map analysis. With a focus on interpretable insights.
+- **Performance_Modeling.ipynb:** XGBoost modelling of the performance objective (see "Performance objective" below), XGBoost global SHAP feature analysis
 ### Usage guide:
 1. Download **Base.csv** from https://www.kaggle.com/datasets/sgpjesus/bank-account-fraud-dataset-neurips-2022 and place it in the same directory as the notebooks.
 2. Run the cells in the notebooks.
 
-## High-level overview of **Base.csv**:
-- Target: Fraud label (1 if fraud, 0 if legit)
-- Each row represents information about a single bank account application.
-- Fraud incidence rate: ~1%
-- Description (from the website): "Base dataset of the BAF suite. Synthetic account opening fraud dataset with 1M instances based on a real-world dataset. It has a "month" column to allow for temporal validation, and three protected attributes (age group, employment status, and % income) to allow for fair ML evaluation."
-
 ## Performance objective:
-The fraud incidence rate in this dataset is ~1%. For rare-event detection, accuracy becomes a far less meaningful metric than precision and recall. For bank account fraud in particular, missing a fraud instance is far more financially costly than falsely flagging a non-fraud instance. Therefore, we weigh recall significantly more than precision. Given this, we chose the F2 score as the optimization goal for our models, reflecting real-world business objectives.
+Let:
+- **TPR** = true positive rate (recall)  
+- **FPR** = false positive rate  
+- Positive rate **π = P(Y = 1)** (rate of fraud)  
+- Negative rate **1 − π = P(Y = 0)** (rate of non-fraud)
+- **C_R** = expected *relative* costs associated with manually reviewing a case flagged by the model
+- **C_FN** = expected *relative* cost of a false negative (failing to detect fraud)
 
-## Performance results (from XGBoost.ipynb):
-Our XGBoost method achieved the following results on the test data:
-```
-Final model F2 Score: 0.34628858170800986
-Final model Recall: 0.5083391243919388
-Final model Precision: 0.15220557636287974
-Final model Accuracy: 0.9533488446961382
-```
-#### Comparison to public baselines:
-We compare our XGBoost model to strong baseline models provided in the most popular publicly available notebook for this dataset: https://www.kaggle.com/code/lennart4711/baselinemodels-roc. In their code, they used industry-standard models with balanced class weights to modify their objective functions to account for heavy class imbalance (~1% fraud rate into account), with zero hyperparameter searching. Note that their models are directly comparable to ours since they used an identical dataset (**Base.csv**) and an identical train/test split (first 6 months' data/last 2 months' data).
+Then the population-normalized expected loss is:
 
-After modifying their code to compute F2 scores for each model, I found that they achieved:
-- Logistic Regression: 0.3102
-- XGBoost: 0.2925
-- Random Forest: 0.2475
-- Neural Network: 0.3204
+E[Loss] = C_R · (TPR · π + FPR · (1 − π)) + C_FN · (1 − TPR) · π
 
-Observe that our XGBoost model achieves meaningful relative performance gains of (0.34628858170800986/0.3204) - 1 = ***~8%*** over their best baseline model and (0.34628858170800986/0.2925) - 1 = ***~18%*** over their XGBoost model. Given that these baselines already use strong, well-established models which account for the heavy class imbalance (~1% fraud rate), and are therefore representative of realistic industry prototypes, this comparison reveals that our modeling choices offer meaningful, nontrivial performance improvements on this task.
+Key modeling assumptions:
+- After the model detects fraud, the case undergoes manual review.
+- Manual review is treated as the ground-truth adjudication process (assumed to make the final decision for whether fraud occurred).
+- Costs associated with manual review are approximately equal for false positives and true positives.
+- Since this is a synthetic dataset, we do not have access to true values for C_R and C_FN. Thus, for the purposes of this hypothetical modeling scenario, we choose illustrative values for C_R and C_FN. We estimate the average cost of manual review plus associated operational and customer-friction costs to be approximately $40–$80 per reviewed account. We estimate the expected fraud loss per missed fraud case to be approximately $2,000–$5,000. This implies a plausible range for C_FN/C_R of roughly 25 to 125. For this investigation, we will adopt a balanced scenario using the midpoint of this range, with C_FN/C_R = 75. Therefore, we use C_R = 1 and C_FN = 75.
 
-## Interpretable feature insights (from SVMs.ipynb):
-From our linear-kernel SVM, we filtered for the standardized features with the strongest coefficient signals (absolute value >= 0.1). Here are the key takeaways:
+The final performance objective, which we will aim to minimize, is then:
 
-### Positive signals for fraud:
-- According to this SVM model, if information about the "number of months in previous registered address of the applicant" is missing, this is a relatively strong signal for fraud. One potential reason is that fraudsters tend to avoid providing a traceable address history.
-- According to this SVM model, the device OS being windows is a relatively strong signal for fraud. One possible explanation is that fraudsters often operate from cheap and widely available Windows environments.
+<ins>**E[Loss] = (TPR · π + FPR · (1 − π)) + 75(1 − TPR) · π**</ins>
 
-### Negative signals for fraud:
-- According to this SVM, the user keeping the session alive on session logout is a negative indicator of fraud. A potential reason for this is that fraudsters tend to avoid being connected to the system longer than they have to be.
-- According to this SVM model, the similarity in the applicant's name to the email name is a negative indicator for fraud. One possible explanation is that fraudsters often use randomly generated or non-identifying email handles.
-- According to this SVM model, the validity of the home phone number is a negative indicator of fraud. One possible explanation is that fraudsters often supply fake or burner phone numbers.
-- According to this SVM model, the applicant having other cards with the same banking company is a negative signal of fraud. This may be because having multiple cards with the same company under the same identity increases the fraudster's detectability, so fraudsters generally avoid this.
-- Housing status being BE, BB, and BC are negative indicators of fraud according to this model. However, given that BE, BB, and BC are anonymized values, we can't say much more beyond this.
+To simulate real-world effects of temporal instability/concept drift, our test dataset will consist of the final 2 months of data.
 
+## Performance results (from Performance_Modeling.ipynb):
+We compare our final XGBoost model to standard baseline models provided in the most popular published notebook for this dataset: https://www.kaggle.com/code/lennart4711/baselinemodels-roc. 
+
+The baseline models include logistic regression, XGBoost, random forest, and neural network models. Each baseline model was implemented with adapted class weights to account for heavy class imbalance (~1% fraud rate) and did not undergo additional exhaustive hyperparameter search. Note that these baseline models are directly comparable to ours since they use an identical dataset (**Base.csv**) and an identical train/test split (first 6 months' data/last 2 months' data).
+
+**Our final XGBoost model achieves the following performance gains:**
+- ***~30% reduction in expected financial losses compared to the most performant baseline model.***
+- ***~30-50% reduction in expected financial losses compared to all baseline models.***
+- ***~65% reduction in expected financial losses compared to the "do nothing" strategy.***
+
+Our model's large performance gains indicate that our modeling decisions led to significant, nontrivial improvements for this task.
+
+## Performance Robustness (from Performance_Modeling.ipynb):
+<img width="790" height="490" alt="image" src="https://github.com/user-attachments/assets/0dfcd7c2-a926-45ef-853b-9d6c90a187a6" />
+
+Although we fixed C_FN = 75 for our official objective function, in practice, the estimate for C_FN may be inexact. In this section, we verify how robust our model is to perturbations in C_FN.
+
+In the above graph, we plot each model's E[Loss] in the C_FN range [25, 125].
+
+Observations:
+- When C_FN is very low (25), our final XGBoost model is comparable with other baseline models, yet still competitive.
+- When C_FN is moderately low, medium, or high-valued, our final XGBoost model strictly outperforms all baseline models by a significant margin.
+- In all cases, all models strictly outperform the "do nothing" strategy by a significant margin.
+
+We conclude that our model is robust to deviations in C_FN.
+
+## Exploratory Data Analysis:
+- For **feature correlation analysis, linear SVM feature coefficient analysis, and feature heat map analysis**, see Exploratory_Data_Analysis.ipynb.
+- For **XGBoost Global SHAP feature analysis**, see Performance_Modeling.ipynb.
