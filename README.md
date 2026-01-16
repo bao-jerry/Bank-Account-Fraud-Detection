@@ -50,7 +50,7 @@ The baseline models include logistic regression, XGBoost, random forest, and neu
 Our model's large performance gains indicate that our modeling decisions led to significant, nontrivial improvements for this task.
 
 ## Performance Robustness (from Performance_Modeling.ipynb):
-<img width="790" height="490" alt="image" src="https://github.com/user-attachments/assets/0dfcd7c2-a926-45ef-853b-9d6c90a187a6" />
+<img width="790" height="490" alt="image" src="https://github.com/user-attachments/assets/65dfe835-5e6a-4750-9ed1-113088bb6df6" />
 
 Although we fixed C_FN = 75 for our official objective function, in practice, the estimate for C_FN may be inexact. In this section, we verify how robust our model is to perturbations in C_FN.
 
