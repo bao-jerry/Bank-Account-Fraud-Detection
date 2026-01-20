@@ -35,16 +35,16 @@ The final performance objective, which we will aim to minimize, is then:
 
 <ins>**E[Loss] = (TPR · π + FPR · (1 − π)) + 75(1 − TPR) · π**</ins>
 
-To simulate real-world effects of temporal instability/concept drift, our test dataset will consist of the final 2 months of data.
+To simulate real-world effects of temporal instability/concept drift, this final performance objective will be evaluated on a test set consisting of the final 2 months of data.
 
 ## Performance results (from Performance_Modeling.ipynb):
-We compare our final XGBoost model to standard baseline models provided in the most popular published notebook for this dataset: https://www.kaggle.com/code/lennart4711/baselinemodels-roc. 
+We compare our final XGBoost model to standard baseline models provided in the most popular published notebook for this dataset: https://www.kaggle.com/code/lennart4711/baselinemodels-roc.
 
-The baseline models include logistic regression, XGBoost, random forest, and neural network models. Each baseline model was implemented with adapted class weights to account for heavy class imbalance (~1% fraud rate) and did not undergo additional exhaustive hyperparameter search. Note that these baseline models are directly comparable to ours since they use an identical dataset (**Base.csv**) and an identical train/test split (first 6 months' data/last 2 months' data).
+The baseline models include logistic regression, XGBoost, random forest, and neural network models. Each baseline model was implemented with adapted class weights to account for heavy class imbalance (~1% fraud rate) without additional exhaustive hyperparameter search. Note that these baseline models are directly comparable to ours since they use an identical dataset (**Base.csv**) and an identical train/test split (first 6 months' data/last 2 months' data).
 
 **Our final XGBoost model achieves the following performance gains:**
-- ***~30% reduction in expected financial losses compared to the most performant baseline model.***
-- ***~30-50% reduction in expected financial losses compared to all baseline models.***
+- ***~35% reduction in expected financial losses compared to the most performant baseline model.***
+- ***~35-50% reduction in expected financial losses compared to all baseline models.***
 - ***~65% reduction in expected financial losses compared to the "do nothing" strategy.***
 
 Our model's large performance gains indicate that our modeling decisions led to significant, nontrivial improvements for this task.
@@ -54,7 +54,7 @@ Our model's large performance gains indicate that our modeling decisions led to 
 
 Although we fixed C_FN = 75 for our official objective function, in practice, the estimate for C_FN may be inexact. In this section, we verify how robust our model is to perturbations in C_FN.
 
-In the above graph, we plot each model's E[Loss] in the C_FN range [25, 125].
+In the above figure, we graph each model's E[Loss] in the C_FN range [25, 125].
 
 Observations:
 - When C_FN is very low (25), our final XGBoost model is comparable with other baseline models, yet still competitive.
