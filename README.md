@@ -1,5 +1,5 @@
 # Bank-Account-Fraud-Detection
-Here are some notebooks that I've created for the Bank Account Fraud Dataset Suite (NeurIPS 2022), which can be found here: https://github.com/feedzai/bank-account-fraud. There are multiple dataset "variants" in the suite. We focus on the base variant: **Base.csv**. All code was tested with Python version 3.12.12.
+Here are some notebooks that I've created for the Bank Account Fraud Dataset Suite (NeurIPS 2022), which can be read about here: https://arxiv.org/pdf/2211.13358. There are multiple dataset "variants" in the suite. We focus on the base variant: **Base.csv**. All code was tested with Python version 3.12.12.
 ### High-level overview of **Base.csv**:
 - **Target:** Fraud label (1 if fraud, 0 if legit)
 - **Features:** Each row represents information about a single bank account application.
