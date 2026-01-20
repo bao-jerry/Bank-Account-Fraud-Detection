@@ -65,4 +65,4 @@ We conclude that our model is robust to deviations in C_FN.
 
 ## Exploratory Data Analysis:
 - For **feature correlation analysis, linear SVM feature coefficient analysis, and feature heat map analysis**, see Exploratory_Data_Analysis.ipynb.
-- For **XGBoost Global SHAP feature analysis**, see Performance_Modeling.ipynb.
+- For **XGBoost global SHAP feature analysis**, see Performance_Modeling.ipynb.
