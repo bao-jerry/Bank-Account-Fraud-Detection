@@ -18,7 +18,7 @@ Let:
 - **FPR** = false positive rate  
 - Positive rate **π = P(Y = 1)** (rate of fraud)  
 - Negative rate **1 − π = P(Y = 0)** (rate of non-fraud)
-- **C_R** = expected relative costs associated with manually reviewing a case flagged by the model
+- **C_R** = expected relative cost associated with manually reviewing a case flagged by the model
 - **C_FN** = expected relative cost of a false negative (failing to detect fraud)
 
 Then the population-normalized expected loss is:
