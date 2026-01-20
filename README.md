@@ -35,7 +35,7 @@ The final performance objective, which we will aim to minimize, is then:
 
 <ins>**E[Loss] = (TPR · π + FPR · (1 − π)) + 75(1 − TPR) · π**</ins>
 
-To simulate real-world effects of temporal instability/concept drift, this final performance objective will be evaluated on a test set consisting of the final 2 months of data.
+To simulate real-world effects of temporal instability/concept drift, the final evaluation of a model's performance will be conducted on a held-out test set consisting of the final 2 months of data.
 
 ## Performance results (from Performance_Modeling.ipynb):
 We compare our final XGBoost model to standard baseline models provided in the most popular published notebook for this dataset: https://www.kaggle.com/code/lennart4711/baselinemodels-roc.
