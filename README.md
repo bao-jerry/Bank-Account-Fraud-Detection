@@ -12,7 +12,7 @@ Here are some notebooks that I've created for the Bank Account Fraud Dataset Sui
 1. Download **Base.csv** from https://www.kaggle.com/datasets/sgpjesus/bank-account-fraud-dataset-neurips-2022 and place it in the same directory as the notebooks.
 2. Run the cells in the notebooks.
 
-## Custom performance objective function:
+## Performance objective function design:
 Let:
 - **TPR** = true positive rate (recall)  
 - **FPR** = false positive rate  
