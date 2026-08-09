@@ -12,7 +12,7 @@ Here are some notebooks that I've created for the Bank Account Fraud Dataset Sui
 1. Download **Base.csv** from https://www.kaggle.com/datasets/sgpjesus/bank-account-fraud-dataset-neurips-2022 and place it in the same directory as the notebooks.
 2. Run the cells in the notebooks.
 
-## Performance objective design:
+## Performance Objective Design:
 Let:
 - **TPR** = true positive rate (recall)  
 - **FPR** = false positive rate  
@@ -37,7 +37,7 @@ The final performance objective, which we will aim to minimize, is then:
 
 To simulate real-world effects of temporal instability/concept drift, the final evaluation of a model's performance will be conducted on a held-out test set consisting of the final 2 months of data.
 
-## Performance results (from Performance_Modeling.ipynb):
+## Performance Results (from Performance_Modeling.ipynb):
 We compare our final XGBoost model to baseline models published in the most popular notebook for this dataset: https://www.kaggle.com/code/lennart4711/baselinemodels-roc.
 
 The baseline models include logistic regression, XGBoost, random forest, and neural network models. Each baseline model was implemented with adapted class weights to account for heavy class imbalance (~1% fraud rate) without additional exhaustive hyperparameter search. Note that these baseline models are directly comparable to ours since they use an identical dataset (**Base.csv**) and an identical train/test split (first 6 months' data/last 2 months' data).
