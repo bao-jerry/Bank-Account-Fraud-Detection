@@ -38,7 +38,7 @@ The final performance objective, which we will aim to minimize, is then:
 To simulate real-world effects of temporal instability/concept drift, the final evaluation of a model's performance will be conducted on a held-out test set consisting of the final 2 months of data.
 
 ## Performance Results (from Performance_Modeling.ipynb):
-We compare our final XGBoost model to baseline models published in the most popular notebook for this dataset: https://www.kaggle.com/code/lennart4711/baselinemodels-roc.
+We compare our final XGBoost model to the baseline models published in the most popular public notebook for this dataset: https://www.kaggle.com/code/lennart4711/baselinemodels-roc.
 
 The baseline models include logistic regression, XGBoost, random forest, and neural network models. Each baseline model was implemented with adapted class weights to account for heavy class imbalance (~1% fraud rate) without additional exhaustive hyperparameter search. Note that these baseline models are directly comparable to ours since they use an identical dataset (**Base.csv**) and an identical train/test split (first 6 months' data/last 2 months' data).
 
